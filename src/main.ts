@@ -1,24 +1,27 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { createSidebar } from './components/sidebar'
+import { renderHome } from './pages/home'
+import { renderAbout } from './pages/about'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const app = document.getElementById('app')!
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const content = document.createElement('main')
+
+function navigate(page: string) {
+  content.innerHTML = ''
+
+  switch (page) {
+    case 'about':
+      content.appendChild(renderAbout())
+      break
+    default:
+      content.appendChild(renderHome())
+  }
+}
+
+const sidebar = createSidebar(navigate)
+
+app.appendChild(sidebar)
+app.appendChild(content)
+
+// 初期表示
+navigate('home')
