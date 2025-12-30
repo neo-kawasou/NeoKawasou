@@ -1,35 +1,30 @@
+import './style.css'
+import { home } from './pages/home'
 import { about } from './pages/about'
 import { contact } from './pages/contact'
-import { home } from './pages/home'
-import './style.css'
 
-const content = document.getElementById('content') as HTMLElement
+const app = document.getElementById('app')!
 
-type Page = 'home' | 'about' | 'contact'
-
-function render(page: Page) {
+function render(page: string) {
   switch (page) {
     case 'about':
-      content.innerHTML = about()
+      app.innerHTML = about()
       break
     case 'contact':
-      content.innerHTML = contact()
+      app.innerHTML = contact()
       break
     default:
-      content.innerHTML = home()
+      app.innerHTML = home()
   }
 }
 
-// サイドバークリックを監視
-document.querySelector('.sidebar')!.addEventListener('click', (e) => {
+document.addEventListener('click', (e) => {
   const target = e.target as HTMLElement
-  if (target.tagName !== 'A') return
-
-  e.preventDefault()
-
-  const page = target.dataset.page as Page
-  render(page)
+  if (target.tagName === 'A') {
+    e.preventDefault()
+    const page = target.getAttribute('data-page')
+    if (page) render(page)
+  }
 })
 
-// 初期表示
 render('home')
