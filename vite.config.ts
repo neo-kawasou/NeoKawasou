@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/neo-kawasou/',
+  base: '/NeoKawasou/',
   build: {
     outDir: 'docs',
   },
