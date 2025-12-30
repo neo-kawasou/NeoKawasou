@@ -1,6 +1,7 @@
 import { createSidebar } from './components/sidebar'
 import { renderHome } from './pages/home'
 import { renderAbout } from './pages/about'
+import { renderContact } from './pages/contact'
 
 const app = document.getElementById('app')!
 
@@ -12,6 +13,9 @@ function navigate(page: string) {
   switch (page) {
     case 'about':
       content.appendChild(renderAbout())
+      break
+    case 'contact':
+      content.appendChild(renderContact())
       break
     default:
       content.appendChild(renderHome())

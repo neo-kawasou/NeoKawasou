@@ -6,6 +6,7 @@ export function createSidebar(onNavigate: (page: string) => void): HTMLElement {
     <ul>
       <li data-page="home">Home</li>
       <li data-page="about">About</li>
+      <li data-page="contact">Contact</li>
     </ul>
   `
 
