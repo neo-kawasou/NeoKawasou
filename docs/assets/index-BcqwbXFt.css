@@ -1,0 +1,1 @@
+#sidebar{width:150px;background-color:#f0f0f0}#sidebar a{text-decoration:none;color:#333;display:block;padding:10px 14px;border-radius:4px;transition:background-color .2s}#sidebar a:hover{background-color:#ddd}#sidebar a.active{background-color:#007acc;color:#fff}#sidebar ul{list-style:none;padding:0;margin:0}
