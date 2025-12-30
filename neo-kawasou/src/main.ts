@@ -1,30 +1,27 @@
-import './style.css'
-import { home } from './pages/home'
-import { about } from './pages/about'
-import { contact } from './pages/contact'
+import { createSidebar } from './components/sidebar'
+import { renderHome } from './pages/home'
+import { renderAbout } from './pages/about'
 
 const app = document.getElementById('app')!
 
-function render(page: string) {
+const content = document.createElement('main')
+
+function navigate(page: string) {
+  content.innerHTML = ''
+
   switch (page) {
     case 'about':
-      app.innerHTML = about()
-      break
-    case 'contact':
-      app.innerHTML = contact()
+      content.appendChild(renderAbout())
       break
     default:
-      app.innerHTML = home()
+      content.appendChild(renderHome())
   }
 }
 
-document.addEventListener('click', (e) => {
-  const target = e.target as HTMLElement
-  if (target.tagName === 'A') {
-    e.preventDefault()
-    const page = target.getAttribute('data-page')
-    if (page) render(page)
-  }
-})
+const sidebar = createSidebar(navigate)
 
-render('home')
+app.appendChild(sidebar)
+app.appendChild(content)
+
+// 初期表示
+navigate('home')
