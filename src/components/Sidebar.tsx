@@ -1,29 +1,16 @@
-type SidebarProps = {
-  onNavigate: (page: string) => void
-  activePage: string
+import { Page } from "../main"
+
+type Props = {
+  onNavigate: (page: Page) => void
+  activePage: Page
 }
 
-export function Sidebar({ onNavigate, activePage }: SidebarProps) {
-  const pages = ['home', 'about', 'contact']
-
+export default function Sidebar({ onNavigate, activePage }: Props) {
   return (
-    <aside id="sidebar">
-      <ul>
-        {pages.map((page) => (
-          <li key={page}>
-            <a
-              href="#"
-              className={activePage === page ? 'active' : ''}
-              onClick={(e) => {
-                e.preventDefault()
-                onNavigate(page)
-              }}
-            >
-              {page.charAt(0).toUpperCase() + page.slice(1)}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </aside>
+    <nav className="sidebar">
+      <button onClick={() => onNavigate('home')}>Home</button>
+      <button onClick={() => onNavigate('about')}>About</button>
+      <button onClick={() => onNavigate('contact')}>Contact</button>
+    </nav>
   )
 }

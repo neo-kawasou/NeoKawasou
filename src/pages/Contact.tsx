@@ -1,8 +1,3 @@
-export function Contact() {
-  return (
-    <div>
-      <h2>Contact</h2>
-      <p>お問い合わせはこちら!!!</p>
-    </div>
-  )
+export default function Contact() {
+  return <h2>Contact</h2>
 }

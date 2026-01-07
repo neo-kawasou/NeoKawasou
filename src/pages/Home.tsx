@@ -1,8 +1,8 @@
-export function Home() {
+export default function Home() {
   return (
     <div>
-      <div>home</div>
-      <p>ホーム画面です!!!!!!</p>
+      <h2>Home</h2>
+      <p>ここを変えたら即反映されますaaaaaaaa</p>
     </div>
   )
 }
