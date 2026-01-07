@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import Home from './pages/Home'
-import Sidebar from './components/Sidebar'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import { Sidebar } from './components/Sidebar'
 
 
 export type Page = 'home' | 'about' | 'contact'

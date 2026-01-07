@@ -1,16 +1,39 @@
-import { Page } from "../main"
+type Page = 'home' | 'about' | 'contact'
 
-type Props = {
-  onNavigate: (page: Page) => void
+type SidebarProps = {
   activePage: Page
+  onNavigate: (page: Page) => void
 }
 
-export default function Sidebar({ onNavigate, activePage }: Props) {
+export function Sidebar({ activePage, onNavigate }: SidebarProps) {
   return (
     <nav className="sidebar">
-      <button onClick={() => onNavigate('home')}>Home</button>
-      <button onClick={() => onNavigate('about')}>About</button>
-      <button onClick={() => onNavigate('contact')}>Contact</button>
+      <ul>
+        <li>
+          <a
+            className={activePage === 'home' ? 'active' : ''}
+            onClick={() => onNavigate('home')}
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            className={activePage === 'about' ? 'active' : ''}
+            onClick={() => onNavigate('about')}
+          >
+            About
+          </a>
+        </li>
+        <li>
+          <a
+            className={activePage === 'contact' ? 'active' : ''}
+            onClick={() => onNavigate('contact')}
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
     </nav>
   )
 }
