@@ -1,8 +1,12 @@
+import React from 'react'
+import { Carousel } from '../components/Carousel'
+
 export default function Home() {
   return (
-    <div>
-      <h2>Home</h2>
-      <p>ここを変えたら即反映されますaaaaaaaa</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <Carousel />
+      <div className="font-bold text-xl justify-items-center align-items-center">ネオ・カワソウのホームページ</div>
+      <div>aaaaaaaa</div>
     </div>
   )
 }

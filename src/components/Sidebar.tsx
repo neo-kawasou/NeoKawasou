@@ -7,33 +7,21 @@ type SidebarProps = {
 
 export function Sidebar({ activePage, onNavigate }: SidebarProps) {
   return (
-    <nav className="sidebar">
-      <ul>
-        <li>
-          <a
-            className={activePage === 'home' ? 'active' : ''}
-            onClick={() => onNavigate('home')}
-          >
-            Home
-          </a>
-        </li>
-        <li>
-          <a
-            className={activePage === 'about' ? 'active' : ''}
-            onClick={() => onNavigate('about')}
-          >
-            About
-          </a>
-        </li>
-        <li>
-          <a
-            className={activePage === 'contact' ? 'active' : ''}
-            onClick={() => onNavigate('contact')}
-          >
-            Contact
-          </a>
-        </li>
+    <aside className="w-40 bg-slate-100 p-2">
+      <ul className="space-y-2">
+        {(['home', 'about', 'contact'] as Page[]).map((page) => (
+          <li key={page}>
+            <button
+              className={`w-full text-left px-2 py-1 rounded ${
+                activePage === page ? 'bg-blue-500 text-white' : ''
+              }`}
+              onClick={() => onNavigate(page)}
+            >
+              {page}
+            </button>
+          </li>
+        ))}
       </ul>
-    </nav>
+    </aside>
   )
 }

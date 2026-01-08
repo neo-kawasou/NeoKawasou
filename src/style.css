@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* サイドバー全体 */
 .sidebar {
   width: 150px;
