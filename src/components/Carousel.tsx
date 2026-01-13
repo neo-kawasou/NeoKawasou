@@ -17,67 +17,80 @@ export function Carousel() {
     setIndex((i) => (i === items.length - 1 ? 0 : i + 1))
   }
 
-  // 自動スライド
   useEffect(() => {
     const timer = setInterval(next, 3000)
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <div className="w-full max-w-xl mx-auto">
-      {/* スライド領域 */}
-      <div className="relative overflow-hidden h-64">
+    <div className="w-full">
+
+      {/* スライド領域：画面いっぱい */}
+      <div
+        className="
+          relative
+          w-full
+          overflow-hidden
+          aspect-video
+          max-h-[260px]
+        "
+      >
         <div
-          className="flex h-full transition-transform duration-300"
+          className="flex h-full transition-transform duration-500"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {items.map((item) => (
             <div
               key={item.id}
-              className="min-w-full h-full flex flex-col items-center justify-center bg-slate-200"
+              className="
+                min-w-full
+                h-full
+                flex
+                flex-col
+                items-center
+                justify-center
+                bg-slate-200
+              "
             >
-              <h3 className="text-xl font-bold">{item.title}</h3>
-              <p className="mt-2">{item.description}</p>
+              <h3 className="text-2xl font-bold">{item.title}</h3>
+              <p className="mt-3">{item.description}</p>
             </div>
           ))}
         </div>
 
         {/* 矢印 */}
         <button
-            onClick={prev}
-            className="absolute left-3 top-1/2 -translate-y-1/2
-                        text-3xl text-slate-600
-                        hover:text-slate-900
-                        transition"
+          onClick={prev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-3xl"
         >
           ◀
         </button>
 
         <button
-            onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2
-                        text-3xl text-slate-600
-                        hover:text-slate-900
-                        transition"
+          onClick={next}
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-3xl"
         >
           ▶
         </button>
       </div>
 
-      {/* インジケーター */}
+      {/* インジケーター：中央 */}
       <div className="flex justify-center gap-3 mt-4">
         {items.map((_, i) => (
           <button
             key={i}
             onClick={() => setIndex(i)}
             className={`h-3 w-3 rounded-full transition-all
-              ${index === i
-                ? 'bg-blue-600 scale-110'
-                : 'bg-gray-300 hover:bg-gray-400'
-              }`}
+              ${
+                index === i
+                  ? 'bg-blue-600 scale-110'
+                  : 'bg-gray-300'
+              }
+            `}
           />
         ))}
       </div>
+
     </div>
   )
 }
