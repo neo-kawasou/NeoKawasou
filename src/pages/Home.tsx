@@ -1,12 +1,23 @@
-import React from 'react'
-import { Carousel } from '../components/Carousel'
+import { Page } from '../types/page'
 
-export default function Home() {
+type Props = {
+  onNavigate: (page: Page) => void
+}
+
+export default function Home({ onNavigate }: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <Carousel />
-      <div className="font-bold text-xl justify-items-center align-items-center">ネオ・カワソウのホームページ</div>
-      <div>aaaaaaaa</div>
+    <div className="flex flex-col gap-4">
+      {/* 画像をクリック */}
+      <img
+        src="/images/next.png"
+        alt="Nextページへ"
+        className="w-64 mx-auto cursor-pointer hover:opacity-80 transition"
+        onClick={() => onNavigate('next')}
+      />
+
+      <div className="font-bold text-xl text-center">
+        ネオ・カワソウのホームページ
+      </div>
     </div>
   )
 }

@@ -8,8 +8,9 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import { Footer } from './components/Footer'
+import Next from './pages/Next'
 
-type Page = 'home' | 'about' | 'contact'
+type Page = 'home' | 'about' | 'contact' | 'next'
 
 function App() {
   const [page, setPage] = useState<Page>('home')
@@ -23,8 +24,11 @@ function App() {
     case 'contact':
       PageComponent = <Contact />
       break
+    case 'next':
+      PageComponent = <Next />
+      break
     default:
-      PageComponent = <Home />
+      PageComponent = <Home onNavigate={setPage} />
   }
 
 return (

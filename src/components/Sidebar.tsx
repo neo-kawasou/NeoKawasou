@@ -1,4 +1,4 @@
-type Page = 'home' | 'about' | 'contact'
+import { Page } from "../types/page"
 
 type SidebarProps = {
   activePage: Page
