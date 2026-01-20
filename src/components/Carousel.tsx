@@ -1,9 +1,24 @@
 import { useEffect, useState } from 'react'
 
 const items = [
-  { id: 1, title: 'Slide 1', description: 'スライド1の内容', image: 'public/images/next.png' },
-  { id: 2, title: 'Slide 2', description: 'スライド2の内容', image: 'public/images/next.png' },
-  { id: 3, title: 'Slide 3', description: 'スライド3の内容', image: 'public/images/next.png' },
+  {
+    id: 1,
+    title: 'Slide 1',
+    description: 'スライド1の内容',
+    image: `${import.meta.env.BASE_URL}images/next.png`,
+  },
+  {
+    id: 2,
+    title: 'Slide 2',
+    description: 'スライド2の内容',
+    image: `${import.meta.env.BASE_URL}images/next.png`,
+  },
+  {
+    id: 3,
+    title: 'Slide 3',
+    description: 'スライド3の内容',
+    image: `${import.meta.env.BASE_URL}images/next.png`,
+  },
 ]
 
 export function Carousel() {
