@@ -1,3 +1,4 @@
+import { Carousel } from '../components/Carousel'
 import { Page } from '../types/page'
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 export default function Home({ onNavigate }: Props) {
   return (
     <div className="flex flex-col gap-4">
+      <Carousel />
       {/* 画像をクリック */}
       <img
         src="/images/next.png"
