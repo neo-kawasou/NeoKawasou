@@ -11,7 +11,7 @@ export default function Home({ onNavigate }: Props) {
       <Carousel />
       {/* 画像をクリック */}
       <img
-        src="/images/next.png"
+        src={`${import.meta.env.BASE_URL}images/next.png`}
         alt="Nextページへ"
         className="w-64 mx-auto cursor-pointer hover:opacity-80 transition"
         onClick={() => onNavigate('next')}
