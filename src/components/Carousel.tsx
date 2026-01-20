@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
 const items = [
-  { id: 1, title: 'Slide 1', description: 'スライド1の内容' },
-  { id: 2, title: 'Slide 2', description: 'スライド2の内容' },
-  { id: 3, title: 'Slide 3', description: 'スライド3の内容' },
+  { id: 1, title: 'Slide 1', description: 'スライド1の内容', image: 'public/images/next.png' },
+  { id: 2, title: 'Slide 2', description: 'スライド2の内容', image: 'public/images/next.png' },
+  { id: 3, title: 'Slide 3', description: 'スライド3の内容', image: 'public/images/next.png' },
 ]
 
 export function Carousel() {
@@ -32,7 +32,7 @@ export function Carousel() {
           w-full
           overflow-hidden
           aspect-video
-          max-h-[260px]
+          max-h-[400px]
         "
       >
         <div
@@ -45,15 +45,40 @@ export function Carousel() {
               className="
                 min-w-full
                 h-full
+                relative
+                overflow-hidden
                 flex
-                flex-col
                 items-center
                 justify-center
-                bg-slate-200
+                bg-black
               "
             >
-              <h3 className="text-2xl font-bold">{item.title}</h3>
-              <p className="mt-3">{item.description}</p>
+              <img
+                src={item.image}
+                alt=""
+                aria-hidden
+                className="
+                  absolute
+                  inset-0
+                  w-full
+                  h-full
+                  object-cover
+                  scale-110
+                  blur-xl
+                  opacity-80
+                "
+              />
+              <img
+                src={item.image}
+                alt={item.title}
+                className="
+                  relative
+                  z-10
+                  w-full
+                  h-full
+                  object-contain
+                "
+              />
             </div>
           ))}
         </div>
