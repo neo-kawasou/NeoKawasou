@@ -1,39 +1,72 @@
-import { Page } from "../types/page"
+import { Page } from '../types/page'
 
 type SidebarProps = {
   activePage: Page
   onNavigate: (page: Page) => void
 }
 
-export function Sidebar({ activePage, onNavigate }: SidebarProps) {
+export function Sidebar({
+  activePage,
+  onNavigate,
+}: SidebarProps) {
   return (
-    <aside className="w-56 bg-slate-100 p-4 border-r">
-      <ul className="space-y-2">
-        {(['home', 'about', 'contact'] as Page[]).map((page) => {
-          const isActive = activePage === page
+    <>
+      {/* オーバーレイ（表示のみ・閉じない） */}
+      <div
+        className="
+          fixed inset-0
+          bg-black/40
+          z-40
+          md:hidden
+          pointer-events-none
+        "
+      />
 
-          return (
-            <li key={page}>
-              <button
-                onClick={() => onNavigate(page)}
-                className={`
-                  w-full text-left
-                  px-3 py-2
-                  rounded-md
-                  transition-colors
-                  ${
-                    isActive
-                      ? 'bg-blue-500 text-white'
-                      : 'text-slate-800'
-                  }
-                `}
-              >
-                {page}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
-    </aside>
+      <aside
+        className="
+          fixed md:static
+          top-16 md:top-0
+          left-0
+          w-full md:w-56
+          bg-slate-100
+          border-b md:border-r
+          z-50
+        "
+      >
+        <ul
+          className="
+            flex flex-row md:flex-col
+            gap-1
+            p-2 md:p-4
+          "
+        >
+          {(['home', 'about', 'contact'] as Page[]).map((page) => {
+            const isActive = activePage === page
+
+            return (
+              <li key={page} className="flex-1 md:flex-none">
+                <button
+                  onClick={() => onNavigate(page)}
+                  className={`
+                    w-full
+                    px-3 py-2
+                    rounded-md
+                    text-center md:text-left
+                    transition-colors
+                    ${
+                      isActive
+                        ? 'bg-blue-500 text-white'
+                        : 'hover:bg-slate-200'
+                    }
+                  `}
+                >
+                  {page}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </aside>
+    </>
   )
 }
