@@ -30,7 +30,7 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
 
       {/* 最新情報 */}
       <section>
-        <div className="border border-gray-300 rounded-md p-4 bg-gray-50">
+        <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
           <News
             limit={3}
             onSelectNews={onSelectNews}
