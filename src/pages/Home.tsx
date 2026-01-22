@@ -8,12 +8,12 @@ type Props = {
 export default function Home({ onNavigate }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <Carousel />
+      <Carousel onNavigate={onNavigate} />
       {/* 画像をクリック */}
       <img
-        src={`${import.meta.env.BASE_URL}images/next.png`}
+        src={`${import.meta.env.BASE_URL}images/次回公演(1).png`}
         alt="Nextページへ"
-        className="w-64 mx-auto cursor-pointer hover:opacity-80 transition"
+        className="mx-auto cursor-pointer hover:opacity-80 transition"
         onClick={() => onNavigate('next')}
       />
 
