@@ -28,8 +28,8 @@ export type Slide = {
 
 export const SLIDES: Slide[] = [
   { title: '第二回公演 放課後クリエイタァズ', image: img('第二回公演スライド.png'), page: 'next' },
-  { title: 'Instagram', image: img('インスタ.png'), href: SNS.instagram.href },
-  { title: 'X', image: img('Twitter.png'), href: SNS.x.href },
+  { title: 'Instagram', image: img('インスタスライド.png'), href: SNS.instagram.href },
+  { title: 'X', image: img('Xスライド.png'), href: SNS.x.href },
 ]
 
 // これまでの公演（新しい公演はいちばん下に足す）
