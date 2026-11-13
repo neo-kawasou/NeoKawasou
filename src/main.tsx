@@ -39,10 +39,17 @@ function App() {
       content = <Next onNavigate={navigate} />
       break
     case 'news':
-      content = <News onSelectNews={openNews} />
+      content = <News onSelectNews={openNews} onNavigate={navigate} />
       break
     case 'newsDetail':
-      content = selectedNewsId && <NewsDetail id={selectedNewsId} onBack={() => navigate('news')} />
+      content = selectedNewsId && (
+        <NewsDetail
+          id={selectedNewsId}
+          onBack={() => navigate('news')}
+          onSelectNews={openNews}
+          onNavigate={navigate}
+        />
+      )
       break
     default:
       content = <Home onNavigate={navigate} onSelectNews={openNews} />

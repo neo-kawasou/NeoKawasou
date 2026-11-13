@@ -36,7 +36,9 @@ export function Footer({ onNavigate, compact = false }: Props) {
             <ul className="hidden md:flex items-center gap-6 text-[12px]">
               <li><button onClick={() => onNavigate('home')} className={linkClass}>ホーム</button></li>
               <li><button onClick={() => onNavigate('next')} className={linkClass}>次回公演</button></li>
+              <li><button onClick={() => onNavigate('news')} className={linkClass}>お知らせ</button></li>
               <li><button onClick={() => onNavigate('about')} className={linkClass}>ネオ・カワソウについて</button></li>
+              <li><button onClick={() => onNavigate('contact')} className={linkClass}>お問い合わせ</button></li>
               {Object.values(SNS).map((s) => (
                 <li key={s.label}>
                   <a href={s.href} target="_blank" rel="noopener noreferrer" className={linkClass}>{s.label}</a>

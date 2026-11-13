@@ -105,7 +105,7 @@ function ContactForm() {
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <label className="block text-[13px] font-bold">
           お名前<Required />
-          <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="例：川添 太郎" className={inputClass} />
+          <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="例：川口 太郎" className={inputClass} />
         </label>
         <label className="block text-[13px] font-bold">
           メールアドレス<Required />

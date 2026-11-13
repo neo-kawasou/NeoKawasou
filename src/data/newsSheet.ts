@@ -7,6 +7,8 @@ export type NewsItem = {
   content: string
   imageUrls: string[]
   category: string // 「公演」「終演」など。空なら表示しない
+  linkLabel: string // 記事の下に出すボタンの文字（例：チケットを予約する）。空ならボタンなし
+  linkUrl: string // ボタンのリンク先
 }
 
 // NEW を付ける日数
@@ -99,6 +101,8 @@ export async function fetchNews(): Promise<NewsItem[]> {
         .filter(Boolean)
         .map((url) => toDirectDriveLink(url)!),
       category: row.category ?? '',
+      linkLabel: row.linkLabel ?? '',
+      linkUrl: row.linkUrl ?? '',
     }))
     .sort((a, b) => b.date.localeCompare(a.date))
 }
