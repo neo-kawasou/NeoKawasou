@@ -36,13 +36,14 @@ export function NewsDetail({ id, onBack }: Props) {
       </button>
       <div className="text-sm text-gray-500">{news.date}</div>
       <h2 className="text-2xl font-bold mb-6">{news.title}</h2>
-      {news.imageUrl && (
+      {news.imageUrls.map((url, i) => (
         <img
-          src={news.imageUrl}
-          alt={news.title}
+          key={url + i}
+          src={url}
+          alt={`${news.title}（${i + 1}枚目）`}
           className="mb-4 w-full object-contain max-h-96"
         />
-      )}
+      ))}
       <div
         className="leading-relaxed"
         dangerouslySetInnerHTML={{
