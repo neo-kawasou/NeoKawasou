@@ -45,12 +45,19 @@ export type Stage = {
 }
 
 export const STAGES: Stage[] = [
-  { no: 1, title: '[第一回公演タイトル]', status: '終演', info: '2026.03' },
+  {
+    no: 1,
+    title: '朗読劇『三つの秘密とその真実』',
+    status: '終演',
+    info: '2026.03 / あなたの店グループ 最上階イベントホール',
+    image: img('第一回公演.png'),
+  },
   {
     no: 2,
     title: '放課後クリエイタァズ',
     status: '上演予定',
     info: '2026.11 / JOY JOY THEATER',
+    image: img('第二回公演.png'),
     page: 'next',
   },
   { no: 3, title: '第三回公演', status: '準備中', info: '詳細は近日公開' },

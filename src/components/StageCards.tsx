@@ -52,9 +52,18 @@ function StageCard({ stage, onNavigate }: { stage: Stage; onNavigate: Props['onN
         isCurrent ? 'shadow-[4px_4px_0_0_#e8b84a]' : ''
       } ${clickable ? 'hover:-translate-y-0.5' : 'cursor-default'}`}
     >
-      <div className="aspect-[4/3] w-full bg-sand">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-sand">
         {stage.image ? (
-          <img src={stage.image} alt={stage.title} className="h-full w-full object-cover" />
+          <>
+            {/* 縦長のチラシなども切らずに見せる：余白には同じ画像をぼかして敷く */}
+            <img
+              src={stage.image}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full scale-110 object-cover blur-lg opacity-70"
+            />
+            <img src={stage.image} alt={stage.title} className="relative h-full w-full object-contain" />
+          </>
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-ink/50">
             {stage.status === '終演' ? '公演写真' : 'キービジュアル'}
