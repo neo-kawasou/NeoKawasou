@@ -194,22 +194,30 @@ export default function Contact({ onNavigate }: Props) {
 
       {/* 連絡先カード（赤い背景に半分かかる） */}
       <section className="container-site -mt-16 pb-14 md:pb-16">
-        <div className="grid gap-4 md:grid-cols-3 md:gap-4">
-          <ContactCard label="MAIL" title="メール" sub={CONTACT_EMAIL} href={`mailto:${CONTACT_EMAIL}`} icon={<MailIcon />} primary />
-          <ContactCard label="INSTAGRAM" title="Instagram DM" sub={SNS.instagram.handle} href={SNS.instagram.href} icon={<InstagramIcon />} />
+        {/* メールは下の「メールで送る」にまとめたので、ここは SNS の DM だけ */}
+        <div className="grid gap-4 md:grid-cols-2 md:gap-4">
+          <ContactCard label="INSTAGRAM" title="Instagram DM" sub={SNS.instagram.handle} href={SNS.instagram.href} icon={<InstagramIcon />} primary />
           <ContactCard label="X" title="X（旧Twitter）DM" sub={SNS.x.handle} href={SNS.x.href} icon={<XIcon />} />
         </div>
       </section>
 
-      {/* フォーム */}
+      {/* メールで送る */}
       <section id="form" className="scroll-mt-20 border-t border-ink/40 bg-paper">
         <div className="container-site py-12 md:flex md:gap-12 md:py-16">
           <div className="md:w-[210px] md:shrink-0">
-            <p className="eyebrow text-curtain">FORM</p>
-            <h2 className="mt-2 font-display text-[24px] md:text-[26px]">フォームで送る</h2>
+            <p className="eyebrow text-curtain">MAIL</p>
+            <h2 className="mt-2 font-display text-[24px] md:text-[26px]">メールで送る</h2>
             <p className="mt-4 text-[12px] leading-loose text-ink/70">
-              内容を確認のうえ、メールにてご返信いたします。お返事まで数日いただく場合があります。
+              送信するを押すと、入力した内容でメールが作成されます。内容を確認のうえ、メールにてご返信いたします。お返事まで数日いただく場合があります。
             </p>
+            {/* 直接メールを書きたい人向けにアドレスも出す */}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="mt-4 inline-flex items-center gap-2 break-all font-mono text-[12px] underline underline-offset-4 hover:text-curtain"
+            >
+              <MailIcon className="h-4 w-4 shrink-0" />
+              {CONTACT_EMAIL}
+            </a>
             {NEXT_STAGE.ticketUrl && (
               <div className="mt-6 rounded border border-dashed border-curtain px-4 py-4">
                 <p className="text-[11px] font-bold text-curtain">{NEXT_STAGE.labelShort}のチケットのご予約は</p>
