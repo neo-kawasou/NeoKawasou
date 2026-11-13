@@ -106,7 +106,7 @@ export default function Next({ onNavigate }: Props) {
           <TicketButton className="mt-6 flex w-full py-4" />
           <div className="mt-5 flex gap-2">
             {[
-              ['あらすじ', '#story'],
+              ['演目', '#program'],
               ['タイムテーブル', '#schedule'],
               ['会場', '#access'],
             ].map(([label, href]) => (
@@ -118,17 +118,27 @@ export default function Next({ onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ---------- あらすじ ---------- */}
-      <section id="story" className="scroll-mt-20 border-t border-ink/40 bg-paper">
+      {/* ---------- 演目 ---------- */}
+      <section id="program" className="scroll-mt-20 border-t border-ink/40 bg-paper">
         <div className="container-site py-12 md:flex md:gap-12 md:py-16">
           <div className="md:w-[180px] md:shrink-0">
-            <Eyebrow>STORY</Eyebrow>
-            <Heading>あらすじ</Heading>
+            <Eyebrow>PROGRAM</Eyebrow>
+            <Heading>演目</Heading>
           </div>
-          <div className="mt-5 md:mt-1">
-            <p className="font-display text-[17px] md:text-[18px] leading-relaxed">{S.catchcopy}</p>
-            <p className="mt-4 text-sm leading-loose text-ink/80 whitespace-pre-line">{S.story}</p>
-          </div>
+          <ol className="mt-6 flex-1 border-t border-ink md:mt-1">
+            {S.programs.map((p, i) => (
+              <li key={i} className="flex gap-4 border-b border-dashed border-ink/40 py-6 md:gap-6">
+                <span className="font-display text-[22px] leading-none text-curtain md:text-[26px]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="flex-1">
+                  <h3 className="font-display text-[18px] leading-snug md:text-[20px]">{p.title}</h3>
+                  {p.credit && <p className="mt-1.5 text-[12px] font-bold text-ink/60">{p.credit}</p>}
+                  {p.text && <p className="mt-3 text-sm leading-loose text-ink/80 whitespace-pre-line">{p.text}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -174,9 +184,10 @@ export default function Next({ onNavigate }: Props) {
             <Eyebrow>ACCESS</Eyebrow>
             <Heading>会場</Heading>
             <p className="mt-5 text-lg font-bold">{S.access.name}</p>
-            <p className="mt-3 text-[13px] leading-relaxed text-ink/80">
+            {/* whitespace-pre-line：site.ts で入れた改行（\n）をそのまま表示する */}
+            <p className="mt-3 text-[13px] leading-relaxed text-ink/80 whitespace-pre-line">
               {S.access.address}
-              <br />
+              {'\n'}
               {S.access.station}
             </p>
             <a
