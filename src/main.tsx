@@ -73,16 +73,17 @@ function App() {
       />
 
       <div className="flex flex-1 overflow-hidden">
+        <main className="flex-1 min-w-0 overflow-x-hidden px-8 py-2">
+          {PageComponent}
+        </main>
+
+        {/* メニューボタンが右にあるので、サイドバーも右に出す */}
         {isSidebarOpen && (
           <Sidebar
             activePage={page === 'newsDetail' ? 'home' : page}
             onNavigate={setPage}
           />
         )}
-
-        <main className="flex-1 min-w-0 overflow-x-hidden px-8 py-2">
-          {PageComponent}
-        </main>
       </div>
 
       <Footer />

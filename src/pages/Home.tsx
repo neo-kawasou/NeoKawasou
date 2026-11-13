@@ -1,4 +1,5 @@
 import { Carousel } from '../components/Carousel'
+import { SectionHeading } from '../components/SectionHeading'
 import { Page } from '../types/page'
 import { News } from './News'
 
@@ -15,29 +16,24 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
 
       {/* 最新情報 */}
       <section>
-        <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
+        <SectionHeading en="NEWS" ja="お知らせ" />
+
+        <div className="bg-white rounded-lg shadow-md border-t-4 border-[#3d5a8a] px-4 py-2">
           <News
             limit={3}
             titleOnly
             onSelectNews={onSelectNews}
           />
-        </div>
 
-        {/* もっと見る */}
-        <div className="text-center mt-4">
-          <button
-            onClick={() => onNavigate('news')}
-            className="
-              px-6 py-2
-              border border-gray-400
-              rounded-full
-              text-sm
-              hover:bg-gray-200
-              transition
-            "
-          >
-            もっと見る
-          </button>
+          {/* もっと見る（一覧の右下） */}
+          <div className="text-right border-t border-gray-200 py-2">
+            <button
+              onClick={() => onNavigate('news')}
+              className="text-sm text-[#3d5a8a] hover:underline"
+            >
+              もっと見る →
+            </button>
+          </div>
         </div>
       </section>
 
@@ -58,12 +54,19 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
 
       {/* お問い合わせ */}
       <section>
-        <h2 className="my-3 font-bold text-xl text-center">
-          - お問い合わせ -
-        </h2>
+        <SectionHeading en="CONTACT" ja="お問い合わせ" />
 
-        <div className="border border-gray-300 rounded-md p-4 bg-gray-50 text-sm">
-          ご質問・ご相談等ございましたら、こちらからお気軽にお問い合わせください。
+        <div className="bg-white rounded-lg shadow-md border-t-4 border-[#3d5a8a] px-4 py-2">
+          <p className="px-2 py-4 text-sm leading-relaxed">
+            ご質問・ご相談等ございましたら、
+            <button
+              onClick={() => onNavigate('contact')}
+              className="text-[#3d5a8a] underline hover:opacity-70"
+            >
+              こちら
+            </button>
+            からお気軽にお問い合わせください。
+          </p>
         </div>
       </section>
     </div>

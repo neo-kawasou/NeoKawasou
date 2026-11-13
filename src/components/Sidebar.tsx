@@ -29,7 +29,7 @@ export function Sidebar({
           left-0
           w-full md:w-56
           bg-slate-100
-          border-b md:border-r
+          border-b md:border-b-0 md:border-l
           z-50
         "
       >

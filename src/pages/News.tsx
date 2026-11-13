@@ -37,10 +37,15 @@ export function News({ onSelectNews, limit, titleOnly }: Props) {
           <li
             key={news.id}
             onClick={() => onSelectNews(news.id)}
-            className="flex gap-4 px-2 py-3 cursor-pointer border-b last:border-b-0 hover:bg-gray-100"
+            className="group flex items-center gap-4 px-2 py-4 cursor-pointer border-b border-dotted border-gray-300 last:border-b-0 hover:bg-[#f3f5f9] transition-colors"
           >
-            <span className="text-sm text-gray-500 shrink-0">{news.date}</span>
-            <span className="font-semibold">{news.title}</span>
+            <span className="text-sm text-[#3d5a8a] tabular-nums shrink-0">
+              {news.date.replace(/-/g, '.')}
+            </span>
+            <span className="font-semibold flex-1">{news.title}</span>
+            <span className="text-gray-400 group-hover:text-[#3d5a8a] group-hover:translate-x-1 transition">
+              ›
+            </span>
           </li>
         ))}
       </ul>
