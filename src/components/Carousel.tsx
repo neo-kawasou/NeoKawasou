@@ -13,7 +13,7 @@ const items: Item[] = [
   {
     id: 1,
     title: '次回公演',
-    image: `${import.meta.env.BASE_URL}images/next.png`,
+    image: `${import.meta.env.BASE_URL}images/第二回公演スライド.png`,
     page: 'next',
   },
   {

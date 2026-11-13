@@ -15,7 +15,7 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
 
       {/* 次回公演 */}
       <img
-        src={`${import.meta.env.BASE_URL}images/次回公演(1).png`}
+        src={`${import.meta.env.BASE_URL}images/次回公演についてのバナー.png`}
         alt="次回公演へ"
         className="
           my-4
