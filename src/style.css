@@ -39,53 +39,77 @@
     );
   }
 
-  /* ---------- 最初の緞帳 ---------- */
+  /* ---------- 最初の緞帳 ----------
+     タイムライン（幕が上がり始める時点を 0 とする）
+     -0.15 スポットライト消灯（0.3s）
+      0.00 本幕が上がる（1.15s）
+      1.05 飾り幕が上がる（0.45s）
+      1.20 ヘッダー → スライド → お知らせ の順にページが現れる */
 
-  /*
-    ビロードの幕
-    ・横方向：丸みのあるひだ（暗い谷 → 明るい山 → 暗い谷）を 80px ごとにくり返す
-    ・縦方向：上と下を少し暗くして、照明が当たっているように見せる
-    ・裾：ひだ1本ごとに丸く垂れ下がる形に切り抜く（mask）
-  */
+  /* 本幕：平らな赤に、濃い赤の縞と黒い線でひだを描く（サイトのイラストと同じタッチ） */
   .curtain-drape {
-    --pleat: 80px; /* ひだ1本の幅 */
-    --hem: 26px; /* 裾の丸みの深さ */
-    background-color: #7d1c1d;
-    background-image:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 22%, transparent 70%, rgba(0, 0, 0, 0.35) 100%),
-      repeating-linear-gradient(
-        90deg,
-        #4a0d0e 0px,
-        #7a1b1c 14px,
-        #a8302f 30px,
-        #c4423f 40px,
-        #a8302f 50px,
-        #7a1b1c 66px,
-        #4a0d0e 80px
-      );
-    /* 裾の丸み：上はそのまま、下の --hem の高さだけ楕円で切り抜く */
-    -webkit-mask:
-      linear-gradient(#000, #000) top / 100% calc(100% - var(--hem)) no-repeat,
-      radial-gradient(ellipse calc(var(--pleat) / 2) var(--hem) at 50% 0, #000 97%, transparent 100%) bottom / var(--pleat) var(--hem) repeat-x;
-    mask:
-      linear-gradient(#000, #000) top / 100% calc(100% - var(--hem)) no-repeat,
-      radial-gradient(ellipse calc(var(--pleat) / 2) var(--hem) at 50% 0, #000 97%, transparent 100%) bottom / var(--pleat) var(--hem) repeat-x;
+    background-color: #9e2b2b;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0 28px,
+      #7d1c1d 28px 44px,
+      transparent 44px 62px,
+      #1c1a17 62px 63.5px,
+      transparent 63.5px 68px
+    );
   }
 
-  /* 準備ができたら、幕が上へ引き上げられる（少し沈んでから上がる） */
+  /* 本幕の上がり方：ゆっくり動き出して途中で加速し、すっと抜ける */
   .curtain-rise {
-    animation: curtain-rise 1.4s cubic-bezier(0.6, 0, 0.3, 1) forwards;
+    animation: curtain-rise 1.15s cubic-bezier(0.7, 0, 0.25, 1) 0.15s forwards;
   }
   @keyframes curtain-rise {
-    0% {
-      transform: translateY(0);
-    }
-    12% {
-      transform: translateY(10px);
-    }
-    100% {
-      /* 裾まで画面から出きるよう、少し余分に上げる */
+    to {
       transform: translateY(calc(-100% - 40px));
+    }
+  }
+
+  /* 飾り幕（一文字幕）：本幕が上がりきる頃に、少し遅れて上がる */
+  .valance-rise {
+    animation: valance-rise 0.45s cubic-bezier(0.7, 0, 0.25, 1) 1.2s forwards;
+  }
+  @keyframes valance-rise {
+    to {
+      transform: translateY(-100%);
+    }
+  }
+
+  /* ロゴの後ろのスポットライト */
+  .curtain-spot {
+    background: #ffe7a8;
+    opacity: 0.38;
+    transition: opacity 0.3s ease;
+  }
+  .curtain-spot-off {
+    opacity: 0;
+  }
+
+  /* 開演：幕が上がったら、ヘッダー → スライド → お知らせ… の順に下から現れる */
+  .stage-opening #app header,
+  .stage-opening #app main > * {
+    animation: stage-in 0.45s ease-out both;
+  }
+  .stage-opening #app header {
+    animation-delay: 1.35s;
+  }
+  .stage-opening #app main > *:nth-child(1) {
+    animation-delay: 1.47s;
+  }
+  .stage-opening #app main > *:nth-child(2) {
+    animation-delay: 1.59s;
+  }
+  .stage-opening #app main > *:nth-child(n + 3) {
+    animation-delay: 1.71s;
+  }
+  @keyframes stage-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
     }
   }
 
