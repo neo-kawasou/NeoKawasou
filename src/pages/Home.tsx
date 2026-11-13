@@ -18,6 +18,7 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
         <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
           <News
             limit={3}
+            titleOnly
             onSelectNews={onSelectNews}
           />
         </div>
