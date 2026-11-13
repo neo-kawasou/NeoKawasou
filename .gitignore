@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 来場者特典の暗号化前の原稿（公開リポジトリに上げない）
+secret/

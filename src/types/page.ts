@@ -5,3 +5,4 @@ export type Page =
   | 'next'
   | 'news'
   | 'newsDetail'
+  | 'special' // QRコードから開く来場者特典（メニューには出さない）
