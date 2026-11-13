@@ -13,21 +13,6 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
       {/* カルーセル */}
       <Carousel onNavigate={onNavigate} />
 
-      {/* 次回公演 */}
-      <img
-        src={`${import.meta.env.BASE_URL}images/次回公演についてのバナー.png`}
-        alt="次回公演へ"
-        className="
-          my-4
-          mx-auto
-          cursor-pointer
-          hover:opacity-80
-          transition
-          max-w-full
-        "
-        onClick={() => onNavigate('next')}
-      />
-
       {/* 最新情報 */}
       <section>
         <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
@@ -54,6 +39,21 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
           </button>
         </div>
       </section>
+
+      {/* 次回公演 */}
+      <img
+        src={`${import.meta.env.BASE_URL}images/次回公演についてのバナー.png`}
+        alt="次回公演へ"
+        className="
+          my-4
+          mx-auto
+          cursor-pointer
+          hover:opacity-80
+          transition
+          max-w-full
+        "
+        onClick={() => onNavigate('next')}
+      />
 
       {/* お問い合わせ */}
       <section>
