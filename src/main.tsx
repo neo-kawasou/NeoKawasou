@@ -80,8 +80,9 @@ function App() {
         {/* メニューボタンが右にあるので、サイドバーも右に出す */}
         {isSidebarOpen && (
           <Sidebar
-            activePage={page === 'newsDetail' ? 'home' : page}
+            activePage={page === 'newsDetail' ? 'news' : page}
             onNavigate={setPage}
+            onClose={() => setIsSidebarOpen(false)}
           />
         )}
       </div>
