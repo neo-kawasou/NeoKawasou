@@ -33,7 +33,7 @@ function App() {
       content = <About onNavigate={navigate} />
       break
     case 'contact':
-      content = <Contact />
+      content = <Contact onNavigate={navigate} />
       break
     case 'next':
       content = <Next onNavigate={navigate} />

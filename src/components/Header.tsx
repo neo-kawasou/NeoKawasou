@@ -64,7 +64,11 @@ export function Header({ activePage, onNavigate }: HeaderProps) {
             })}
             <button
               onClick={() => go('contact')}
-              className="rounded-full bg-curtain px-5 py-2.5 text-[13px] font-bold tracking-wider text-paper hover:brightness-110 transition"
+              aria-current={activePage === 'contact' ? 'page' : undefined}
+              // お問い合わせページにいる間は黒いボタン
+              className={`rounded-full px-5 py-2.5 text-[13px] font-bold tracking-wider text-paper hover:brightness-110 transition ${
+                activePage === 'contact' ? 'bg-ink' : 'bg-curtain'
+              }`}
             >
               お問い合わせ
             </button>
