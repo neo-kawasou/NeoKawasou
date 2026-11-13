@@ -4,6 +4,7 @@ import { LogoMark } from './ui'
 import { MobileMenu } from './MobileMenu'
 
 type HeaderProps = {
+  activePage: Page
   onNavigate: (page: Page) => void
 }
 
@@ -14,7 +15,7 @@ const NAV: { page: Page; label: string }[] = [
   { page: 'about', label: 'ネオ・カワソウについて' },
 ]
 
-export function Header({ onNavigate }: HeaderProps) {
+export function Header({ activePage, onNavigate }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   // メニューを開いている間は後ろのページをスクロールさせない
@@ -44,15 +45,23 @@ export function Header({ onNavigate }: HeaderProps) {
 
           {/* PC：横並びのメニュー */}
           <nav className="hidden md:flex items-center gap-7">
-            {NAV.map(({ page, label }) => (
-              <button
-                key={page}
-                onClick={() => go(page)}
-                className="text-[13px] font-bold tracking-wider hover:text-curtain transition-colors"
-              >
-                {label}
-              </button>
-            ))}
+            {NAV.map(({ page, label }) => {
+              const active = activePage === page
+              return (
+                <button
+                  key={page}
+                  onClick={() => go(page)}
+                  aria-current={active ? 'page' : undefined}
+                  className={`relative py-2 text-[13px] font-bold tracking-wider transition-colors hover:text-curtain ${
+                    active ? 'text-curtain' : ''
+                  }`}
+                >
+                  {label}
+                  {/* 今いるページには赤い下線 */}
+                  {active && <span className="absolute -bottom-1 -left-3 -right-3 h-[2px] bg-curtain" />}
+                </button>
+              )
+            })}
             <button
               onClick={() => go('contact')}
               className="rounded-full bg-curtain px-5 py-2.5 text-[13px] font-bold tracking-wider text-paper hover:brightness-110 transition"

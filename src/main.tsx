@@ -36,7 +36,7 @@ function App() {
       content = <Contact />
       break
     case 'next':
-      content = <Next />
+      content = <Next onNavigate={navigate} />
       break
     case 'news':
       content = <News onSelectNews={openNews} />
@@ -50,9 +50,9 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header onNavigate={navigate} />
+      <Header activePage={page === 'newsDetail' ? 'news' : page} onNavigate={navigate} />
       <main className="flex-1">{content}</main>
-      <Footer onNavigate={navigate} />
+      <Footer onNavigate={navigate} compact={page !== 'home'} />
     </div>
   )
 }

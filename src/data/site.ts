@@ -37,11 +37,20 @@ export type StageStatus = '終演' | '上演予定' | '準備中'
 
 export type Stage = {
   no: number
-  title: string
+  title: string // カードに出すタイトル
   status: StageStatus
-  info: string // 時期や会場など、タイトルの下に出す1行
+  info: string // 時期や会場など、カードのタイトルの下に出す1行
   image?: string // 公演写真・キービジュアル（なければ仮の枠）
-  page?: 'next' // 押したときに移動するページ
+  page?: 'next' // 詳細の小窓に「公演ページへ」ボタンを出す
+
+  // ↓ カードを押したときに開く詳細（準備中の公演は詳細なし）
+  genre?: string // 「朗読劇」など、タイトルの上に小さく出す
+  name?: string // 詳細でのタイトル（なければ title を使う）
+  date?: string
+  venue?: string
+  cast?: string
+  story?: string
+  gallery?: string[] // 公演写真（何枚でも）
 }
 
 export const STAGES: Stage[] = [
@@ -51,6 +60,13 @@ export const STAGES: Stage[] = [
     status: '終演',
     info: '2026.03 / あなたの店グループ 最上階イベントホール',
     image: img('第一回公演.png'),
+    genre: '朗読劇',
+    name: '三つの秘密とその真実',
+    date: '2026年3月[公演日]',
+    venue: 'あなたの店グループ 最上階イベントホール',
+    cast: '[出演者名]',
+    story: '[あらすじ：2〜3文で]',
+    gallery: [],
   },
   {
     no: 2,
@@ -59,6 +75,48 @@ export const STAGES: Stage[] = [
     info: '2026.11 / JOY JOY THEATER',
     image: img('第二回公演.png'),
     page: 'next',
+    date: '2026年11月21日（土）〜 22日（日）',
+    venue: 'JOY JOY THEATER',
+    cast: '[出演者名]',
+    story: '[あらすじ：2〜3文で]',
+    gallery: [],
   },
   { no: 3, title: '第三回公演', status: '準備中', info: '詳細は近日公開' },
 ]
+
+// 次回公演ページの中身（[ ] の部分は決まったら書き換える）
+export const NEXT_STAGE = {
+  label: 'ネオ・カワソウ 第二回公演', // タイトル上のハンコ風ラベル
+  labelShort: '第二回公演', // スマホ用
+  titleLines: ['放課後', 'クリエイタァズ'], // 2行目に色の帯がつく
+  date: '2026年 11月21日（土）〜 22日（日）',
+  dateShort: '2026.11.21（土）〜 22（日）', // スマホ用
+  venue: 'JOY JOY THEATER',
+  keyVisual: img('第二回公演.png'),
+  ticketUrl: 'https://forms.gle/6dyEoftm4mx9zMix5', // チケット予約フォームのURL（空にするとボタンが「準備中」になる）
+
+  catchcopy: '[キャッチコピー：作品をひとことで表す一行]',
+  story: '[あらすじ本文：登場人物と舞台設定、物語の始まりを3〜5文で。結末には触れずに。]',
+
+  // タイムテーブル（1日目は黒、2日目は赤）
+  schedule: [
+    { date: '11.21', weekday: '土曜日', short: '土', times: ['[開演 00:00]', '[開演 00:00]'] },
+    { date: '11.22', weekday: '日曜日', short: '日', times: ['[開演 00:00]', '[開演 00:00]'] },
+  ],
+  doorsOpen: '開場は開演の[00]分前',
+  duration: '上演時間：約[00]分（予定）',
+
+  access: {
+    name: 'JOY JOY THEATER',
+    address: '[住所]',
+    station: '[最寄り駅から徒歩0分]',
+    // Googleマップで検索する言葉（住所が決まったら住所にすると正確）
+    mapQuery: 'JOY JOY THEATER',
+  },
+
+  notes: [
+    '[注意事項：撮影・録音について]',
+    '[注意事項：未就学児の入場について]',
+    '[注意事項：遅れて来場した場合]',
+  ],
+}

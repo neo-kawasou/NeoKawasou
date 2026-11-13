@@ -4,12 +4,52 @@ import { InstagramIcon, XIcon } from './ui'
 
 type Props = {
   onNavigate: (page: Page) => void
+  compact?: boolean // トップ以外のページは1行の小さいフッター
 }
 
 const linkClass = 'text-[13px] text-paper/90 hover:text-mustard transition-colors text-left'
 
-export function Footer({ onNavigate }: Props) {
+function SnsCircles() {
+  return (
+    <div className="flex gap-3 md:hidden">
+      <a href={SNS.instagram.href} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+        className="h-11 w-11 rounded-full border border-paper/60 flex items-center justify-center">
+        <InstagramIcon />
+      </a>
+      <a href={SNS.x.href} target="_blank" rel="noopener noreferrer" aria-label="X"
+        className="h-11 w-11 rounded-full border border-paper/60 flex items-center justify-center">
+        <XIcon />
+      </a>
+    </div>
+  )
+}
+
+export function Footer({ onNavigate, compact = false }: Props) {
   const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  if (compact) {
+    return (
+      <footer className="bg-ink text-paper">
+        <div className="container-site py-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <p className="font-display text-xl">ネオ・カワソウ</p>
+            <ul className="hidden md:flex items-center gap-6 text-[12px]">
+              <li><button onClick={() => onNavigate('home')} className={linkClass}>ホーム</button></li>
+              <li><button onClick={() => onNavigate('next')} className={linkClass}>次回公演</button></li>
+              <li><button onClick={() => onNavigate('about')} className={linkClass}>ネオ・カワソウについて</button></li>
+              {Object.values(SNS).map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className={linkClass}>{s.label}</a>
+                </li>
+              ))}
+            </ul>
+            <SnsCircles />
+          </div>
+          <p className="mt-8 border-t border-paper/15 pt-5 text-[11px] text-paper/70">© 2026 ネオ・カワソウ</p>
+        </div>
+      </footer>
+    )
+  }
 
   return (
     <footer className="bg-ink text-paper">
@@ -47,17 +87,7 @@ export function Footer({ onNavigate }: Props) {
             </div>
           </div>
 
-          {/* スマホ：SNSの丸いボタン */}
-          <div className="flex gap-3 md:hidden">
-            <a href={SNS.instagram.href} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-              className="h-11 w-11 rounded-full border border-paper/60 flex items-center justify-center">
-              <InstagramIcon />
-            </a>
-            <a href={SNS.x.href} target="_blank" rel="noopener noreferrer" aria-label="X"
-              className="h-11 w-11 rounded-full border border-paper/60 flex items-center justify-center">
-              <XIcon />
-            </a>
-          </div>
+          <SnsCircles />
         </div>
 
         <div className="mt-10 flex items-center justify-between border-t border-paper/15 pt-5">

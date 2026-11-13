@@ -61,8 +61,16 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
               <span className="eyebrow text-mustard">STAGES</span>
               <h2 className="font-display text-lg md:text-xl">これまでの公演</h2>
               <span className="h-px flex-1 border-t border-dashed border-paper/30" />
+              <button
+                onClick={() => onNavigate('about')}
+                className="group shrink-0 text-[12px] font-bold text-paper/80 hover:text-mustard transition-colors"
+              >
+                すべて見る
+                <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1" aria-hidden>→</span>
+              </button>
             </div>
-            <StageCards onNavigate={onNavigate} />
+            {/* トップは最新3件だけ。全部はネオ・カワソウについてのページで */}
+            <StageCards onNavigate={onNavigate} latest={3} />
           </div>
         </div>
       </section>

@@ -68,6 +68,18 @@ export function NewBadge() {
   )
 }
 
+/* ---------- パンくずリスト ---------- */
+
+export function Breadcrumb({ current, onHome }: { current: string; onHome: () => void }) {
+  return (
+    <nav className="container-site pt-5 md:pt-6 text-[11px] text-ink/60" aria-label="現在地">
+      <button onClick={onHome} className="hover:text-curtain transition-colors">ホーム</button>
+      <span className="mx-2">/</span>
+      <span>{current}</span>
+    </nav>
+  )
+}
+
 /* ---------- 見出し ---------- */
 
 // 小さい英字ラベル＋極太の日本語見出し
