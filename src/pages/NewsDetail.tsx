@@ -1,5 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { NewsItem, fetchNews, contentToHtml } from '../data/newsSheet'
+import { ImageViewer } from '../components/ImageViewer'
+
+// 記事内の画像：クリックで拡大できることが分かるよう、カーソルを虫眼鏡にする
+const IMG_CLASS =
+  'w-full object-contain max-h-96 cursor-zoom-in hover:opacity-90 transition-opacity'
 
 type Props = {
   id: string
@@ -10,6 +15,8 @@ export function NewsDetail({ id, onBack }: Props) {
   const [news, setNews] = useState<NewsItem | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [zoomed, setZoomed] = useState<{ src: string; alt: string } | null>(null)
+  const closeZoom = useCallback(() => setZoomed(null), [])
 
   useEffect(() => {
     fetchNews()
@@ -36,19 +43,39 @@ export function NewsDetail({ id, onBack }: Props) {
       </button>
       <div className="text-sm text-gray-500">{news.date}</div>
       <h2 className="text-2xl font-bold mb-6">{news.title}</h2>
-      {news.imageUrls.map((url, i) => (
-        <img
-          key={url + i}
-          src={url}
-          alt={`${news.title}（${i + 1}枚目）`}
-          className="mb-4 w-full object-contain max-h-96"
-        />
-      ))}
       <div
         className="leading-relaxed"
-        dangerouslySetInnerHTML={{
-          __html: contentToHtml(news.content, 'my-2 w-full object-contain max-h-96'),
+        // 本文中の画像（![説明](URL) で入れたもの）もクリックで拡大
+        onClick={(e) => {
+          const target = e.target as HTMLElement
+          if (target instanceof HTMLImageElement) {
+            setZoomed({ src: target.src, alt: target.alt })
+          }
         }}
+        dangerouslySetInnerHTML={{
+          __html: contentToHtml(news.content, `my-2 ${IMG_CLASS}`),
+        }}
+      />
+
+      {/* imageUrl 列の画像は本文の下にまとめて並べる */}
+      {news.imageUrls.length > 0 && (
+        <div className="mt-6 flex flex-col gap-4">
+          {news.imageUrls.map((url, i) => (
+            <img
+              key={url + i}
+              src={url}
+              alt={`${news.title}（${i + 1}枚目）`}
+              onClick={() => setZoomed({ src: url, alt: `${news.title}（${i + 1}枚目）` })}
+              className={IMG_CLASS}
+            />
+          ))}
+        </div>
+      )}
+
+      <ImageViewer
+        src={zoomed?.src ?? null}
+        alt={zoomed?.alt}
+        onClose={closeZoom}
       />
     </div>
   )
