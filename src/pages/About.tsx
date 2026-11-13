@@ -1,21 +1,16 @@
 import { StageCards } from '../components/StageCards'
 import { Breadcrumb, InstagramIcon, LogoMark, XIcon } from '../components/ui'
-import { ABOUT_TEXT, CONTACT_FORM_URL, SNS } from '../data/site'
+import { ABOUT_TEXT, SNS } from '../data/site'
 import { Page } from '../types/page'
 
 type Props = {
   onNavigate: (page: Page) => void
 }
 
-// ネオ・カワソウについて：紹介文 → これまでの公演（押すと詳細） → お問い合わせ
+// ネオ・カワソウについて：紹介文 → これまでの公演（押すと詳細）
 export default function About({ onNavigate }: Props) {
   const snsPill =
     'inline-flex items-center gap-2 rounded-full border border-ink px-4 py-2 text-[12px] font-bold hover:bg-paper transition-colors'
-
-  const openContact = () => {
-    if (CONTACT_FORM_URL) window.open(CONTACT_FORM_URL, '_blank', 'noopener,noreferrer')
-    else onNavigate('contact')
-  }
 
   return (
     <>
@@ -60,23 +55,6 @@ export default function About({ onNavigate }: Props) {
             <p className="mt-2 text-[11px] text-paper/60 md:mt-0">カードを押すと公演の詳細が開きます</p>
           </div>
           <StageCards onNavigate={onNavigate} showDetailLink />
-        </div>
-      </section>
-
-      {/* お問い合わせ */}
-      <section className="bg-curtain text-paper">
-        <div className="container-site py-12 md:flex md:items-center md:justify-between md:py-14">
-          <div>
-            <p className="eyebrow text-paper/80">CONTACT</p>
-            <h2 className="mt-2 font-display text-[22px] md:text-[26px]">出演・取材のご相談はこちら</h2>
-          </div>
-          <button
-            onClick={openContact}
-            className="group mt-6 inline-flex items-center gap-4 rounded-full bg-paper px-6 py-3.5 text-[13px] font-bold text-ink hover:bg-cream transition-colors md:mt-0"
-          >
-            お問い合わせ
-            <span className="transition-transform group-hover:translate-x-1" aria-hidden>→</span>
-          </button>
         </div>
       </section>
     </>

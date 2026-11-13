@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Page } from '../types/page'
-import { STAGES, Stage } from '../data/site'
+import { Program, STAGES, Stage } from '../data/site'
 import { ImageViewer } from './ImageViewer'
 import { XIcon } from './ui'
 
@@ -91,6 +91,54 @@ function StageCard({ stage, onOpen, showDetailLink }: { stage: Stage; onOpen: ()
   )
 }
 
+/* ---------- 演目1つ分（開け閉めできる） ---------- */
+
+function ProgramItem({ no, program }: { no: number; program: Program }) {
+  const [open, setOpen] = useState(false)
+  const hasText = !!program.text
+
+  const head = (
+    <>
+      <span className="font-display text-base leading-none text-curtain">{String(no).padStart(2, '0')}</span>
+      <span className="flex-1">
+        <span className="block font-display text-[15px] md:text-[16px] leading-snug">{program.title}</span>
+        {program.credit && <span className="mt-1 block text-[12px] font-bold text-ink/60">{program.credit}</span>}
+      </span>
+    </>
+  )
+
+  return (
+    <li className="border-b border-dashed border-ink/40 last:border-b-0">
+      {hasText ? (
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="group flex w-full items-baseline gap-4 py-3 text-left"
+        >
+          {head}
+          {/* ＋ / − の印 */}
+          <span
+            className={`relative h-6 w-6 shrink-0 self-center rounded-full border border-ink transition-colors group-hover:bg-cream ${
+              open ? 'bg-ink group-hover:bg-ink' : ''
+            }`}
+            aria-hidden
+          >
+            <span className={`absolute left-1/2 top-1/2 h-[1.5px] w-2.5 -translate-x-1/2 -translate-y-1/2 ${open ? 'bg-paper' : 'bg-ink'}`} />
+            {!open && <span className="absolute left-1/2 top-1/2 h-2.5 w-[1.5px] -translate-x-1/2 -translate-y-1/2 bg-ink" />}
+          </span>
+        </button>
+      ) : (
+        <div className="flex items-baseline gap-4 py-3">{head}</div>
+      )}
+
+      {/* あらすじ：開いたときだけ表示 */}
+      {hasText && open && (
+        <p className="pb-4 pl-9 text-[13px] md:text-[14px] leading-loose whitespace-pre-line text-ink/80">{program.text}</p>
+      )}
+    </li>
+  )
+}
+
 /* ---------- 詳細の小窓 ---------- */
 
 function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: () => void; onNavigate: Props['onNavigate'] }) {
@@ -118,7 +166,8 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
 
   return (
     <div
-      className="fixed inset-0 z-[60] overflow-y-auto bg-ink/70 px-4 py-10 md:flex md:items-center md:justify-center"
+      // 中身が画面より長いときはスクロールできるよう、items-center ではなく子の my-auto で中央に置く
+      className="fixed inset-0 z-[60] overflow-y-auto bg-ink/70 px-4 py-10 md:flex md:justify-center"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -126,12 +175,12 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative mx-auto w-full max-w-[620px] rounded-md border border-ink bg-paper text-ink shadow-[8px_8px_0_0_#9e2a2b] md:flex"
+        className="relative mx-auto md:my-auto w-full max-w-[960px] rounded-md border border-ink bg-paper text-ink shadow-[10px_10px_0_0_#9e2a2b] md:flex"
       >
         {/* 左：写真（ナナメに貼った紙） */}
-        <div className="border-b border-dashed border-ink bg-cream px-8 py-6 md:w-[240px] md:shrink-0 md:border-b-0 md:border-r">
+        <div className="border-b border-dashed border-ink bg-cream px-8 py-8 md:w-[380px] md:px-10 md:py-10 md:shrink-0 md:border-b-0 md:border-r">
           <p className="text-center font-mono text-[11px] tracking-[0.3em]">{no(stage.no)}</p>
-          <div className="relative mx-auto mt-3 aspect-[3/4] w-[60%] md:w-full -rotate-2 overflow-hidden border border-ink bg-sand">
+          <div className="relative mx-auto mt-4 aspect-[3/4] w-[70%] md:w-full -rotate-2 overflow-hidden border border-ink bg-sand">
             {stage.image ? (
               <FittedImage src={stage.image} alt={stage.title} />
             ) : (
@@ -141,7 +190,7 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
         </div>
 
         {/* 右：情報 */}
-        <div className="flex-1 px-6 py-6 md:px-7">
+        <div className="flex-1 px-6 py-7 md:px-10 md:py-10">
           <div className="flex items-start justify-between">
             <StatusTag status={stage.status} />
             <button
@@ -154,12 +203,12 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
           </div>
 
           {stage.genre && <p className="mt-2 text-[12px] font-bold text-curtain">{stage.genre}</p>}
-          <h3 className="mt-2 font-display text-xl md:text-2xl leading-snug">{stage.name ?? stage.title}</h3>
+          <h3 className="mt-2 font-display text-2xl md:text-[32px] leading-snug">{stage.name ?? stage.title}</h3>
 
           {rows.length > 0 && (
-            <dl className="mt-5 border-t border-dashed border-ink/50 text-[13px]">
+            <dl className="mt-6 border-t border-dashed border-ink/50 text-[14px] md:text-[15px]">
               {rows.map(([k, v]) => (
-                <div key={k} className="flex gap-6 border-b border-dashed border-ink/50 py-2.5">
+                <div key={k} className="flex gap-6 border-b border-dashed border-ink/50 py-3">
                   <dt className="w-8 shrink-0 font-bold text-curtain">{k}</dt>
                   <dd className="font-bold">{v}</dd>
                 </div>
@@ -167,12 +216,24 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
             </dl>
           )}
 
-          {stage.story && <p className="mt-5 text-[13px] leading-relaxed text-ink/80">{stage.story}</p>}
+          {stage.story && <p className="mt-6 text-[14px] md:text-[15px] leading-loose whitespace-pre-line text-ink/80">{stage.story}</p>}
+
+          {/* 演目（タイトルを押すと、その作品のあらすじだけが開く） */}
+          {stage.programs && stage.programs.length > 0 && (
+            <div className="mt-6">
+              <p className="eyebrow text-ink/60">PROGRAM</p>
+              <ol className="mt-1">
+                {stage.programs.map((p, i) => (
+                  <ProgramItem key={i} no={i + 1} program={p} />
+                ))}
+              </ol>
+            </div>
+          )}
 
           {gallery.length > 0 && (
             <div className="mt-5">
               <p className="eyebrow text-ink/60">GALLERY</p>
-              <div className="mt-2 grid grid-cols-3 gap-2">
+              <div className="mt-2 grid grid-cols-3 gap-3">
                 {gallery.map((src, i) => (
                   <button key={src + i} onClick={() => setZoomed(src)} className="aspect-square overflow-hidden bg-sand">
                     <img src={src} alt={`公演写真 ${i + 1}`} className="h-full w-full object-cover cursor-zoom-in hover:opacity-90" />
