@@ -2,36 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* サイドバー全体 */
-.sidebar {
-  width: 150px;
-  background-color: #f0f0f0;
-  height: 100vh;              /* 縦いっぱい */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #f4ede2; /* cream */
+    color: #1c1a17; /* ink */
+    font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
 }
 
-/* リスト */
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+@layer components {
+  /* セクション上の小さい英字ラベル（NEWS / ABOUT など） */
+  .eyebrow {
+    font-family: "DM Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+  }
 
-/* リンク */
-.sidebar a {
-  text-decoration: none;
-  color: #333;
-  display: block;
-  padding: 10px 14px;
-  transition: background-color 0.2s;
-}
+  /* 横幅をそろえる入れ物 */
+  .container-site {
+    @apply mx-auto w-full max-w-[1100px] px-4 md:px-12;
+  }
 
-/* ホバー */
-.sidebar a:hover {
-  background-color: #ddd;
-}
+  /* スマホメニューの背景：劇場の幕のような縦じま */
+  .curtain-stripes {
+    background-color: #9e2a2b; /* curtain */
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 48px,
+      rgba(0, 0, 0, 0.12) 48px,
+      rgba(0, 0, 0, 0.12) 60px
+    );
+  }
 
-/* アクティブ */
-.sidebar a.active {
-  background-color: #007acc;
-  color: #fff;
+  /* 横スクロールできることが分かるよう、細いスクロールバーを出す */
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(253, 250, 243, 0.5) rgba(253, 250, 243, 0.1);
+  }
+  .thin-scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: rgba(253, 250, 243, 0.1);
+    border-radius: 3px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(253, 250, 243, 0.5);
+    border-radius: 3px;
+  }
 }

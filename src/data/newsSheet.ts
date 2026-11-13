@@ -6,6 +6,23 @@ export type NewsItem = {
   title: string
   content: string
   imageUrls: string[]
+  category: string // 「公演」「終演」など。空なら表示しない
+}
+
+// NEW を付ける日数
+const NEW_DAYS = 7
+
+// 投稿日から7日以内なら NEW
+export function isNew(date: string): boolean {
+  const posted = new Date(date.replace(/[./]/g, '-'))
+  if (isNaN(posted.getTime())) return false
+  const days = (Date.now() - posted.getTime()) / (1000 * 60 * 60 * 24)
+  return days >= 0 && days < NEW_DAYS
+}
+
+// 2026-11-13 → 2026.11.13
+export function formatDate(date: string): string {
+  return date.replace(/[-/]/g, '.')
 }
 
 const SHEET_CSV_URL =
@@ -25,7 +42,7 @@ export function toDirectDriveLink(url: string | undefined): string | undefined {
 const INLINE_PATTERN =
   /!\[(.*?)\]\((.*?)\)|\[(.+?)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<>"）」]+)/g
 
-const LINK_CLASS = 'text-[#3d5a8a] underline break-all hover:opacity-70'
+const LINK_CLASS = 'text-curtain underline break-all hover:opacity-70'
 
 function link(url: string, label: string): string {
   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${LINK_CLASS}">${label}</a>`
@@ -81,6 +98,7 @@ export async function fetchNews(): Promise<NewsItem[]> {
         .split(/[\s,、]+/)
         .filter(Boolean)
         .map((url) => toDirectDriveLink(url)!),
+      category: row.category ?? '',
     }))
     .sort((a, b) => b.date.localeCompare(a.date))
 }

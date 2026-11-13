@@ -1,38 +1,79 @@
+import { useEffect, useState } from 'react'
 import { Page } from '../types/page'
+import { LogoMark } from './ui'
+import { MobileMenu } from './MobileMenu'
 
 type HeaderProps = {
-  onToggleSidebar: () => void
   onNavigate: (page: Page) => void
 }
 
-export function Header({ onToggleSidebar, onNavigate }: HeaderProps) {
-  return (
-    <header className="h-16 bg-[#2b3f63] text-white flex items-center px-4 md:px-6 gap-3 shadow-md">
-      {/* ロゴ＋タイトル */}
-      <h1
-        onClick={() => onNavigate('home')}
-        className="flex items-center gap-3 cursor-pointer group min-w-0"
-      >
-        <img
-          src={`${import.meta.env.BASE_URL}images/ロゴ.jpg`}
-          alt="ネオ・カワソウ"
-          className="h-12 w-12 shrink-0 rounded-full bg-white ring-2 ring-white/40 group-hover:ring-white transition"
-        />
-        <span className="font-bold text-lg tracking-wider truncate group-hover:text-[#d8e1f0] transition-colors">
-          ネオ・カワソウのホームページ
-        </span>
-      </h1>
+// PC のヘッダーに並べるリンク（お問い合わせは赤いボタンで別に出す）
+const NAV: { page: Page; label: string }[] = [
+  { page: 'next', label: '次回公演' },
+  { page: 'news', label: 'お知らせ' },
+  { page: 'about', label: 'ネオ・カワソウについて' },
+]
 
-      {/* メニューボタン（右端） */}
-      <button
-        onClick={onToggleSidebar}
-        aria-label="メニュー"
-        className="ml-auto shrink-0 p-2 rounded-md hover:bg-white/10 transition-colors"
-      >
-        <span className="block w-6 h-[2px] bg-white" />
-        <span className="block w-6 h-[2px] bg-white mt-[6px]" />
-        <span className="block w-4 h-[2px] bg-white mt-[6px] ml-auto" />
-      </button>
-    </header>
+export function Header({ onNavigate }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // メニューを開いている間は後ろのページをスクロールさせない
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  const go = (page: Page) => {
+    setMenuOpen(false)
+    onNavigate(page)
+  }
+
+  return (
+    <>
+      <header className="sticky top-0 z-40 bg-cream border-b border-ink/40">
+        <div className="container-site flex h-16 md:h-[86px] items-center justify-between">
+          {/* ロゴ */}
+          <button onClick={() => go('home')} className="flex items-center gap-3 group" aria-label="ホームへ">
+            <LogoMark className="h-10 w-10 md:h-11 md:w-11" />
+            <span className="font-display text-lg md:text-xl group-hover:text-curtain transition-colors">
+              ネオ・カワソウ
+            </span>
+          </button>
+
+          {/* PC：横並びのメニュー */}
+          <nav className="hidden md:flex items-center gap-7">
+            {NAV.map(({ page, label }) => (
+              <button
+                key={page}
+                onClick={() => go(page)}
+                className="text-[13px] font-bold tracking-wider hover:text-curtain transition-colors"
+              >
+                {label}
+              </button>
+            ))}
+            <button
+              onClick={() => go('contact')}
+              className="rounded-full bg-curtain px-5 py-2.5 text-[13px] font-bold tracking-wider text-paper hover:brightness-110 transition"
+            >
+              お問い合わせ
+            </button>
+          </nav>
+
+          {/* スマホ：メニューボタン */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            aria-label="メニューを開く"
+            className="md:hidden h-11 w-11 rounded-full border border-ink flex flex-col items-center justify-center gap-[5px]"
+          >
+            <span className="block h-[1.5px] w-4 bg-ink" />
+            <span className="block h-[1.5px] w-4 bg-ink" />
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && <MobileMenu onNavigate={go} onClose={() => setMenuOpen(false)} />}
+    </>
   )
 }
