@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import { CurtainIntro } from './components/CurtainIntro'
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
@@ -60,6 +61,8 @@ function App() {
       <Header activePage={page === 'newsDetail' ? 'news' : page} onNavigate={navigate} />
       <main className="flex-1">{content}</main>
       <Footer onNavigate={navigate} compact={page !== 'home'} />
+      {/* 初めて開いたときの緞帳 */}
+      <CurtainIntro />
     </div>
   )
 }

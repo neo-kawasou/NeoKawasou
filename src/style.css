@@ -39,6 +39,67 @@
     );
   }
 
+  /* ---------- 最初の緞帳 ---------- */
+
+  /*
+    ビロードの幕
+    ・横方向：丸みのあるひだ（暗い谷 → 明るい山 → 暗い谷）を 80px ごとにくり返す
+    ・縦方向：上と下を少し暗くして、照明が当たっているように見せる
+    ・裾：ひだ1本ごとに丸く垂れ下がる形に切り抜く（mask）
+  */
+  .curtain-drape {
+    --pleat: 80px; /* ひだ1本の幅 */
+    --hem: 26px; /* 裾の丸みの深さ */
+    background-color: #7d1c1d;
+    background-image:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 22%, transparent 70%, rgba(0, 0, 0, 0.35) 100%),
+      repeating-linear-gradient(
+        90deg,
+        #4a0d0e 0px,
+        #7a1b1c 14px,
+        #a8302f 30px,
+        #c4423f 40px,
+        #a8302f 50px,
+        #7a1b1c 66px,
+        #4a0d0e 80px
+      );
+    /* 裾の丸み：上はそのまま、下の --hem の高さだけ楕円で切り抜く */
+    -webkit-mask:
+      linear-gradient(#000, #000) top / 100% calc(100% - var(--hem)) no-repeat,
+      radial-gradient(ellipse calc(var(--pleat) / 2) var(--hem) at 50% 0, #000 97%, transparent 100%) bottom / var(--pleat) var(--hem) repeat-x;
+    mask:
+      linear-gradient(#000, #000) top / 100% calc(100% - var(--hem)) no-repeat,
+      radial-gradient(ellipse calc(var(--pleat) / 2) var(--hem) at 50% 0, #000 97%, transparent 100%) bottom / var(--pleat) var(--hem) repeat-x;
+  }
+
+  /* 準備ができたら、幕が上へ引き上げられる（少し沈んでから上がる） */
+  .curtain-rise {
+    animation: curtain-rise 1.4s cubic-bezier(0.6, 0, 0.3, 1) forwards;
+  }
+  @keyframes curtain-rise {
+    0% {
+      transform: translateY(0);
+    }
+    12% {
+      transform: translateY(10px);
+    }
+    100% {
+      /* 裾まで画面から出きるよう、少し余分に上げる */
+      transform: translateY(calc(-100% - 40px));
+    }
+  }
+
+  /* ロゴはふわっと出てくる */
+  .curtain-logo {
+    animation: curtain-logo 0.6s ease-out both;
+  }
+  @keyframes curtain-logo {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
   /* 横スクロールできることが分かるよう、細いスクロールバーを出す */
   .thin-scrollbar {
     scrollbar-width: thin;
