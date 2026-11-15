@@ -4,17 +4,72 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/NeoKawasou/images/ロゴ.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ネオ・カワソウ</title>
+
+    <!-- ===== 検索・SNS 向けの情報 =====
+         title / description は検索結果に出る文章。公演が変わったら書き換える -->
+    <title>ネオ・カワソウ｜公式サイト</title>
+    <meta
+      name="description"
+      content="ネオ・カワソウは、2025年9月に結成された、とある高校演劇部のOG・OBを主軸に構成された演劇団体です。第二回公演『放課後クリエイタァズ』2026年11月21日（土）・22日（日）JOY JOY THEATER（東京・練馬区桜台）にて上演。"
+    />
+    <link rel="canonical" href="https://neo-kawasou.github.io/NeoKawasou/" />
+
+    <!-- SNS でリンクを貼ったときに出るカード -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ネオ・カワソウ" />
+    <meta property="og:title" content="ネオ・カワソウ｜公式サイト" />
+    <meta
+      property="og:description"
+      content="とある高校演劇部のOG・OBを主軸に構成された演劇団体。第二回公演『放課後クリエイタァズ』2026年11月21日・22日 JOY JOY THEATERにて上演。"
+    />
+    <meta property="og:url" content="https://neo-kawasou.github.io/NeoKawasou/" />
+    <meta property="og:image" content="https://neo-kawasou.github.io/NeoKawasou/images/%E7%AC%AC%E4%BA%8C%E5%9B%9E%E5%85%AC%E6%BC%94%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89.png" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@kawaso_geki" />
+
+    <!-- Google 向け：劇団についての情報（検索結果での表示に使われる） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TheaterGroup",
+        "name": "ネオ・カワソウ",
+        "alternateName": "NeoKawasou",
+        "url": "https://neo-kawasou.github.io/NeoKawasou/",
+        "logo": "https://neo-kawasou.github.io/NeoKawasou/images/%E3%83%AD%E3%82%B4.jpg",
+        "description": "2025年9月に結成された、とある高校演劇部のOG・OBを主軸に構成された演劇団体",
+        "foundingDate": "2025-09",
+        "sameAs": ["https://www.instagram.com/neo_kawasou", "https://x.com/kawaso_geki"]
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
-    />
+    />
     <script type="module" crossorigin src="/NeoKawasou/assets/index-DHsC4Vxd.js"></script>
     <link rel="stylesheet" crossorigin href="/NeoKawasou/assets/index-BUZukrTY.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- JavaScript が動く前・動かない環境（検索エンジンなど）向けの中身。
+           サイトが動き出すと、ここは本来のページに置き換わる -->
+      <main style="max-width:640px;margin:0 auto;padding:48px 16px;line-height:1.8">
+        <h1>ネオ・カワソウ</h1>
+        <p>2025年9月に結成された、とある高校演劇部のOG・OBを主軸に構成された演劇団体です。</p>
+        <h2>次回公演：第二回公演『放課後クリエイタァズ』</h2>
+        <p>
+          日時：2026年11月21日（土）17:00開演／11月22日（日）11:00開演<br />
+          会場：JOY JOY THEATER（東京都練馬区桜台1丁目2-8 地下一階）<br />
+          演目：「演劇部へようこそ！」「『夢』三部作 文芸俱楽部活動報告五月号より」
+        </p>
+        <p>
+          <a href="https://www.instagram.com/neo_kawasou">Instagram（@neo_kawasou）</a> ／
+          <a href="https://x.com/kawaso_geki">X（@kawaso_geki）</a>
+        </p>
+      </main>
+    </div>
   </body>
 </html>
