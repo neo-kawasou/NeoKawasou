@@ -104,11 +104,12 @@ export default function Next({ onNavigate }: Props) {
         {/* スマホ：予約ボタンとページ内リンク */}
         <div className="md:hidden">
           <TicketButton className="mt-6 flex w-full py-4" />
-          <div className="mt-5 flex gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {/* URL の # を変えるとページ切り替えと混ざるので、スクロールだけで移動する */}
             {[
               ['演目', 'program'],
               ['タイムテーブル', 'schedule'],
+              ...(S.perk ? [['特典', 'perk']] : []),
               ['会場', 'access'],
             ].map(([label, id]) => (
               <button
@@ -182,6 +183,75 @@ export default function Next({ onNavigate }: Props) {
           </p>
         </div>
       </section>
+
+      {/* ---------- 特典（応援チケット） ---------- */}
+      {S.perk && (
+        <section id="perk" className="scroll-mt-20 border-t border-ink/40 bg-ink text-paper">
+          <div className="container-site py-12 md:flex md:gap-12 md:py-16">
+            <div className="md:w-[180px] md:shrink-0">
+              <p className="eyebrow text-mustard">SUPPORT</p>
+              <h2 className="mt-2 font-display text-[24px] md:text-[28px]">特典</h2>
+            </div>
+
+            <div className="mt-6 flex-1 md:mt-1">
+              <p className="text-sm leading-loose text-paper/85">{S.perk.lead}</p>
+
+              {/* チケットの形のカード */}
+              <div className="mt-7 flex overflow-hidden rounded-md border border-paper/80 bg-paper text-ink shadow-[5px_5px_0_0_#e8b84a]">
+                <div className="flex-1 px-5 py-6 md:px-7">
+                  <h3 className="font-display text-[20px] md:text-[22px]">{S.perk.name}</h3>
+
+                  {/* 特典の一覧（名前と値段） */}
+                  <ul className="mt-4 border-t border-dashed border-ink/50">
+                    {S.perk.items.map((item) => (
+                      <li
+                        key={item.name}
+                        className={`flex gap-3 border-b border-dashed border-ink/50 py-3 ${item.image ? 'items-center' : 'items-baseline'}`}
+                      >
+                        {/* 見本画像があれば小さく表示（押すと拡大）。なければ ◆ */}
+                        {item.image ? (
+                          <button
+                            type="button"
+                            onClick={() => setZoomed(item.image!)}
+                            aria-label={`${item.name}の見本を拡大`}
+                            className="h-14 w-14 shrink-0 overflow-hidden rounded border border-ink/40 bg-sand cursor-zoom-in md:h-16 md:w-16"
+                          >
+                            <img src={item.image} alt={`${item.name}の見本`} className="h-full w-full object-cover" />
+                          </button>
+                        ) : (
+                          <span className="text-curtain" aria-hidden>◆</span>
+                        )}
+                        <span className="flex-1">
+                          <span className="block text-[14px] font-bold">{item.name}</span>
+                          {/* 1行の説明（空なら出さない） */}
+                          {item.note && <span className="mt-1 block text-[12px] leading-relaxed text-ink/70">{item.note}</span>}
+                        </span>
+                        {item.price && <span className="font-mono text-[13px] font-bold text-ink/80">{item.price}</span>}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* 全部セット：赤い帯で目立たせる */}
+                  {S.perk.set && (
+                    <div className="mt-4 rounded bg-curtain px-4 py-3.5 text-paper">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="font-display text-[17px] md:text-[18px]">{S.perk.set.name}</span>
+                        {S.perk.set.price && <span className="font-display text-[17px] md:text-[18px]">{S.perk.set.price}</span>}
+                      </div>
+                      {S.perk.set.note && <p className="mt-1 text-[12px] text-paper/85">{S.perk.set.note}</p>}
+                    </div>
+                  )}
+                  {S.perk.howTo && <p className="mt-4 text-[13px] leading-relaxed text-ink/75">{S.perk.howTo}</p>}
+                </div>
+                {/* 右端の半券（スマホでは隠す） */}
+                <div className="hidden w-[90px] shrink-0 flex-col items-center justify-center border-l-2 border-dashed border-ink bg-cream sm:flex">
+                  <span className="font-mono text-[10px] tracking-[0.3em] [writing-mode:vertical-rl]">SUPPORT TICKET</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ---------- 会場 ---------- */}
       <section id="access" className="scroll-mt-20 border-t border-ink/40 bg-paper">

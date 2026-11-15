@@ -173,6 +173,32 @@ export const NEXT_STAGE = {
   doorsOpen: '開場は開演の30分前',
   duration: '上演時間：約90分（予定）',
 
+  // 特典（応援チケット）。表示したくないときは perk: null にする
+  perk: {
+    name: '応援チケット', // 欄の見出し
+    lead: '本公演はフリーカンパ制（基本無料）です。応援したいと思っていただけた方に向けて、ささやかなお礼が付いた応援チケットをご用意しています。',
+    // 特典の一覧（行を足せば増える。price を空 '' にすると値段は出ない。note は名前の下に出る1行の説明）
+    // image は見本画像：public/images/ に置いて img('ファイル名') と書く。空 '' なら画像なし
+    items: [
+      { name: 'ロゴステッカー', price: '500円', note: '各所で使っているオシャレなネオのロゴステッカー', image: '' },
+      { name: 'ポストカード①', price: '1000円', note: '今回の素敵な公演チラシのポストカード', image: '' },
+      { name: 'ポストカード②', price: '1000円', note: '演者の写真を卒アル風にまとめました', image: '' },
+      { name: '演劇部冊子「斉藤の創作ノート」', price: '1000円', note: '劇中劇の舞台裏を描いたコピー本', image: '' },
+      { name: '夢ブックカバー', price: '1000円', note: '作中に登場する重要な小道具を貴方の手に', image: '' },
+      { name: 'デジタルパンフレット', price: '1000円', note: '二作品のあらすじや登場人物の説明、役者インタビューに加えて、書き下ろしの後日談を掲載', image: '' },
+      { name: '当日撮影券', price: '1000円', note: 'ご自身のスマホでお好きなメンバーと一緒に記念撮影', image: '' },
+    ],
+    // まとめ買い（いちばん下に目立たせて出す。不要なら set: null）
+    set: { name: '全部セット', price: '5000円', note: '上記全部盛りで1500円お買い得!!' },
+    howTo: '購入方法：当日受付にてお申し付けください、ご覧いただいた後でも購入可能です', // 買い方
+  } as {
+    name: string
+    lead: string
+    items: { name: string; price: string; note?: string; image?: string }[]
+    set: { name: string; price: string; note: string } | null
+    howTo: string
+  } | null,
+
   access: {
     name: 'JOY JOY THEATER',
     address: '〒176-0002 東京都練馬区桜台１丁目２−８ 地下一階',
