@@ -193,7 +193,7 @@ export default function Special({ onNavigate }: Props) {
                 autoFocus
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="パンフレットなどに記載のパスワード"
+                placeholder="ご購入者様限定のパスワード"
                 className="mt-2 w-full rounded border border-ink bg-cream px-3 py-3 text-sm placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-curtain/40"
               />
             </label>
