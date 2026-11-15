@@ -16,7 +16,7 @@ export const CONTACT_FORM_URL = ''
 export const CONTACT_EMAIL = 'neokawasou@gmail.com'
 
 // お問い合わせの種類（フォームで選ぶもの）
-export const CONTACT_TYPES = ['公演・チケットについて', '劇団について', 'その他']
+export const CONTACT_TYPES = ['公演・チケットについて', 'ネオ・カワソウについて', 'その他']
 
 // スマホメニューの下に出す、今の公演へのボタン
 export const CURRENT_STAGE_LABEL = '第二回公演『放課後クリエイタァズ』'
