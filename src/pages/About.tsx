@@ -54,7 +54,8 @@ export default function About({ onNavigate }: Props) {
             </div>
             <p className="mt-2 text-[11px] text-paper/60 md:mt-0">カードを押すと公演の詳細が開きます</p>
           </div>
-          <StageCards onNavigate={onNavigate} showDetailLink />
+          {/* 全件表示なので、横スクロールではなく画面の幅に合わせて縦に並べる */}
+          <StageCards onNavigate={onNavigate} showDetailLink layout="grid" />
         </div>
       </section>
     </>

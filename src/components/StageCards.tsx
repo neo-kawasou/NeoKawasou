@@ -8,6 +8,8 @@ type Props = {
   onNavigate: (page: Page) => void
   showDetailLink?: boolean // カードに「詳細を見る →」を出す（紹介ページ用）
   latest?: number // 新しい方から何件だけ出すか（なければ全部）
+  layout?: 'scroll' | 'grid' // 並べ方（下の StageCards の説明を参照）
+  newestFirst?: boolean // 新しい公演から順に並べる（なければ古い順）
 }
 
 const STATUS_CLASS: Record<Stage['status'], string> = {
@@ -264,25 +266,43 @@ function StageDetail({ stage, onClose, onNavigate }: { stage: Stage; onClose: ()
 
 /* ---------- 一覧 ---------- */
 
-// これまでの公演（PC は3列、スマホは横スクロール）。カードを押すと詳細が開く
-export function StageCards({ onNavigate, showDetailLink = false, latest }: Props) {
+// これまでの公演。カードを押すと詳細が開く
+//   layout="scroll"（トップページ用）：スマホは横スクロール、PC は3列
+//   layout="grid"（紹介ページ用）    ：画面の幅に合わせて 1列 → 2列 → 3列 で縦に並べる（件数が増えても見やすい）
+export function StageCards({ onNavigate, showDetailLink = false, latest, layout = 'scroll', newestFirst = false }: Props) {
   const [opened, setOpened] = useState<Stage | null>(null)
   const close = useCallback(() => setOpened(null), [])
 
-  // STAGES は古い順に並んでいるので、最新 N 件は後ろから取る（並び順は古い順のまま）
-  const stages = latest ? STAGES.slice(-latest) : STAGES
+  // STAGES は古い順に並んでいるので、最新 N 件は後ろから取る
+  const picked = latest ? STAGES.slice(-latest) : STAGES
+  // newestFirst のときは新しい順（No.03 → No.02 → No.01）に並べ替える
+  const stages = newestFirst ? [...picked].reverse() : picked
+
+  const cards = stages.map((stage) => (
+    <StageCard key={stage.no} stage={stage} onOpen={() => setOpened(stage)} showDetailLink={showDetailLink} />
+  ))
 
   return (
-    <div className="-mx-4 md:mx-0">
-      <ul className="thin-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
-        {stages.map((stage) => (
-          <li key={stage.no} className="w-[72%] shrink-0 snap-start md:w-auto">
-            <StageCard stage={stage} onOpen={() => setOpened(stage)} showDetailLink={showDetailLink} />
-          </li>
-        ))}
-      </ul>
+    <>
+      {layout === 'grid' ? (
+        <ul className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
+          {cards.map((card, i) => (
+            <li key={stages[i].no}>{card}</li>
+          ))}
+        </ul>
+      ) : (
+        <div className="-mx-4 md:mx-0">
+          <ul className="thin-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
+            {cards.map((card, i) => (
+              <li key={stages[i].no} className="w-[72%] shrink-0 snap-start md:w-auto">
+                {card}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {opened && <StageDetail stage={opened} onClose={close} onNavigate={onNavigate} />}
-    </div>
+    </>
   )
 }

@@ -70,7 +70,7 @@ export default function Home({ onNavigate, onSelectNews }: Props) {
               </button>
             </div>
             {/* トップは最新3件だけ。全部はネオ・カワソウについてのページで */}
-            <StageCards onNavigate={onNavigate} latest={3} />
+            <StageCards onNavigate={onNavigate} latest={3} newestFirst />
           </div>
         </div>
       </section>
