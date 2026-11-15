@@ -1,8 +1,9 @@
-import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { ImageViewer } from '../components/ImageViewer'
+import { PdfViewer } from '../components/PdfViewer'
 import { LogoMark } from '../components/ui'
 import { contentToHtml } from '../data/newsSheet'
-import { EncryptedPayload, SpecialContent, decryptSpecial } from '../data/specialCrypto'
+import { EncryptedPayload, SpecialAttachment, SpecialContent, decryptSpecial } from '../data/specialCrypto'
 import { Page } from '../types/page'
 
 type Props = {
@@ -31,7 +32,39 @@ const save = (pass: string | null) => {
   }
 }
 
-const IMG_CLASS = 'my-3 w-full object-contain max-h-[480px] rounded border border-ink cursor-zoom-in'
+// 暗号を解いたファイルの中身（base64）をバイト列に戻す
+const toBytes = (b64: string) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))
+
+// 添付ファイル1つ分：ページの中にそのまま表示する（ダウンロードボタンは出さない）
+function AttachmentCard({ attachment: a }: { attachment: SpecialAttachment }) {
+  const bytes = useMemo(() => toBytes(a.data), [a.data])
+  const isPdf = a.mime === 'application/pdf'
+
+  // 画像は data URL にしてそのまま表示
+  const imageSrc = useMemo(() => (isPdf ? null : `data:${a.mime};base64,${a.data}`), [a, isPdf])
+
+  return (
+    <li className="rounded border border-ink bg-cream px-3 py-4 md:px-5">
+      <p className="mb-3 flex items-center gap-2 text-[14px] font-bold">
+        <span className="rounded bg-curtain px-1.5 py-0.5 font-mono text-[10px] text-paper">{isPdf ? 'PDF' : 'IMG'}</span>
+        {a.label}
+      </p>
+      {isPdf ? (
+        <PdfViewer data={bytes} title={a.label} />
+      ) : (
+        <img
+          src={imageSrc!}
+          alt={a.label}
+          className="block w-full select-none border border-ink/30"
+          onContextMenu={(e) => e.preventDefault()}
+          draggable={false}
+        />
+      )}
+    </li>
+  )
+}
+
+const IMG_CLASS ='my-3 w-full object-contain max-h-[480px] rounded border border-ink cursor-zoom-in'
 
 // 来場者特典ページ（QRコードから #/special で開く。メニューには出さない）
 export default function Special({ onNavigate }: Props) {
@@ -110,6 +143,17 @@ export default function Special({ onNavigate }: Props) {
             }}
             dangerouslySetInnerHTML={{ __html: contentToHtml(content.body, IMG_CLASS) }}
           />
+
+          {/* 一緒に暗号化した PDF など（パスワードを入れた人だけが開ける） */}
+          {content.attachments && content.attachments.length > 0 && (
+            <div className="px-5 pb-7 md:px-8 md:pb-9">
+              <ul className="space-y-3">
+                {content.attachments.map((a) => (
+                  <AttachmentCard key={a.file} attachment={a} />
+                ))}
+              </ul>
+            </div>
+          )}
         </article>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button

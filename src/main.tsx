@@ -35,8 +35,12 @@ function App() {
   const [selectedNewsId, setSelectedNewsId] = useState<string | null>(null)
 
   // 開いたまま URL の # が変わったとき（同じタブで QR を読んだときなど）にも切り替える
+  // ただし #/special のように決まった # のときだけ。ページ内の # では切り替えない
   useEffect(() => {
-    const onHash = () => setPage(pageFromHash())
+    const onHash = () => {
+      const target = HASH_PAGES[window.location.hash]
+      if (target) setPage(target)
+    }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])

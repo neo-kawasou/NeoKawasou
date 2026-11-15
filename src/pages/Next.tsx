@@ -105,14 +105,20 @@ export default function Next({ onNavigate }: Props) {
         <div className="md:hidden">
           <TicketButton className="mt-6 flex w-full py-4" />
           <div className="mt-5 flex gap-2">
+            {/* URL の # を変えるとページ切り替えと混ざるので、スクロールだけで移動する */}
             {[
-              ['演目', '#program'],
-              ['タイムテーブル', '#schedule'],
-              ['会場', '#access'],
-            ].map(([label, href]) => (
-              <a key={href} href={href} className="rounded-full border border-ink px-4 py-2 text-[12px] font-bold">
+              ['演目', 'program'],
+              ['タイムテーブル', 'schedule'],
+              ['会場', 'access'],
+            ].map(([label, id]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                className="rounded-full border border-ink px-4 py-2 text-[12px] font-bold"
+              >
                 {label}
-              </a>
+              </button>
             ))}
           </div>
         </div>

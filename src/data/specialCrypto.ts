@@ -2,9 +2,18 @@
 // 暗号化は scripts/encrypt-special.mjs で行う。方式は両方で同じにすること：
 //   パスワード →（PBKDF2 / SHA-256 / ITERATIONS 回）→ 鍵 →（AES-GCM）→ 中身
 
+// 一緒に暗号化したファイル（PDF など）
+export type SpecialAttachment = {
+  label: string // ボタンの上に出す名前
+  file: string // 元のファイル名（ダウンロード時の名前）
+  mime: string // ファイルの種類（application/pdf など）
+  data: string // ファイルの中身（base64）
+}
+
 export type SpecialContent = {
   title: string // ページの見出し
   body: string // 本文（お知らせと同じ書き方：改行・**太字**・[文字](URL)・![説明](画像URL)）
+  attachments?: SpecialAttachment[]
 }
 
 export type EncryptedPayload = {
