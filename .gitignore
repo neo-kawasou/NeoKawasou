@@ -25,3 +25,6 @@ dist-ssr
 
 # 来場者特典の暗号化前の原稿（公開リポジトリに上げない）
 secret/
+
+# pdf.js のデータ（npm run dev / build のときに node_modules から自動でコピーされる）
+public/pdfjs/

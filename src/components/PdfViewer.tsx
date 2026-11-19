@@ -26,7 +26,16 @@ function usePdf(data: Uint8Array) {
         pdfjs.GlobalWorkerOptions.workerSrc = worker.default
         // isEvalSupported: false … PDF の中のスクリプトを実行させない（CVE-2024-4367 対策）
         // data はコピーを渡す（pdf.js は渡したデータを使い切ってしまうため）
-        doc = await pdfjs.getDocument({ data: data.slice(), isEvalSupported: false }).promise
+        // cMapUrl / standardFontDataUrl … 日本語の文字や、PDF に入っていないフォントを描くためのデータ
+        //   （scripts/copy-pdfjs-assets.mjs が public/pdfjs/ に用意する）
+        const assets = `${import.meta.env.BASE_URL}pdfjs/`
+        doc = await pdfjs.getDocument({
+          data: data.slice(),
+          isEvalSupported: false,
+          cMapUrl: `${assets}cmaps/`,
+          cMapPacked: true,
+          standardFontDataUrl: `${assets}standard_fonts/`,
+        }).promise
         if (cancelled) doc.destroy()
         else setPdf(doc)
       } catch (e) {
